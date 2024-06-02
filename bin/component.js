@@ -37,21 +37,32 @@ export class Component {
     })
   }
     
-  create() {
-      this.template = yaml.load(fs.readFileSync(path.join(this.__dirname,this.templatePath), 'utf-8'))
-      this.outputFolder = path.join(process.cwd(), this.template.output);
+  create() { 
+    this.template = yaml.load(fs.readFileSync(path.join(this.__dirname, this.templatePath), 'utf-8'))
+    
+    this.outputFolder = path.join(process.cwd(), this.template.output);
+    
+    if (!fs.existsSync(this.outputFolder)) {
+      this.showError([`Folder ${this.outputFolder} does not exist`, `Папка ${this.outputFolder} не существует`]);
+      process.exit(1);
+    }
+    
     this.template.instructions.forEach((instruction) => {
+
       if (fs.existsSync(path.join(this.outputFolder,this.replaceVars(instruction.path)))) {
-          this.showError([`File/Folder ${this.replaceVars(instruction.path)} already exists`, `Файл/Папка ${this.replaceVars(instruction.path)} уже существует`]);
+        this.showError([`File/Folder ${this.replaceVars(instruction.path)} already exists`, `Файл/Папка ${this.replaceVars(instruction.path)} уже существует`]);
         process.exit(1);  
       }
-        if (instruction.type === 'folder') {
+        
+      if (instruction.type === 'folder') {
         fs.mkdirSync(path.join(this.outputFolder, this.replaceVars(instruction.path)), { recursive: true });
       }
+
       if (instruction.type === 'file') {
         fs.writeFileSync(path.join(this.outputFolder, this.replaceVars(instruction.path)), this.replaceVars(instruction.content));
       }
     })
+    
     this.showSuccess([`Component ${this.name.pascalCase} created`, `Компонент ${this.name.pascalCase} создан`]);
   }
 }
