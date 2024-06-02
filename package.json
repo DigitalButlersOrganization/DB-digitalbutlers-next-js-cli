@@ -5,10 +5,14 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "post": "npm run build && npm publish --access public"
   },
   "bin": {
     "dbn": "./bin/dbn.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DigitalButlersOrganization/DB-digitalbutlers-nextjs-cli"
   },
   "keywords": [],
   "author": "",
