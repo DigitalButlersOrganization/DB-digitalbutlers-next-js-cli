@@ -6,23 +6,9 @@
       path: "{{lowerCase}}"
     },
     {
-      type: "folder",
-      path: "{{lowerCase}}/layout"
-    },
-    {
       type: "file",
-      path: "{{lowerCase}}/layout/{{pascalCase}}Layout.tsx",
-      content: "import classes from './{{pascalCase}}Layout.module.scss';\n\nexport const {{pascalCase}}Layout = () => {\n  return <div className={classes['{{lowerCase}}']}>{/* write your layout here */}</div>;\n};\n",
-    },
-    {
-      type: "file",
-      path: "{{lowerCase}}/layout/{{pascalCase}}Layout.module.scss",
+      path: "{{lowerCase}}/{{pascalCase}}.module.scss",
       content: "@import '@style-functions';\n\n.{{lowerCase}} {\n\tdisplay: block;\n\t// your styles\n}\n"
-    },
-    {
-      type: "file",
-      path: "{{lowerCase}}/layout/index.ts",
-      content: "export * from './{{pascalCase}}Layout';\n"
     },
     {
       type: "file",
