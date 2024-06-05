@@ -8,7 +8,7 @@
     {
       type: "file",
       path: "{{lowerCase}}/{{pascalCase}}.tsx",
-      content: "import classes from './{{pascalCase}}.module.scss';\n\nexport const {{pascalCase}} = () => {\n  //this is the place to load data from the server\n\n  return <div className={classes.{{lowerCase}}}>{/* paste your layout here */}</div>;\n};\n"
+      content: "import classes from './{{pascalCase}}.module.scss';\n\nexport const {{pascalCase}} = () => {\n  //this is the place to load data from the server\n\n  return <div className={classes['{{lowerCase}}']}>{/* paste your layout here */}</div>;\n};\n"
     },
     {
       type: "file",
