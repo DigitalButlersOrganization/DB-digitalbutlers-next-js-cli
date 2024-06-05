@@ -18,7 +18,7 @@
     {
       type: "file",
       path: "{{lowerCase}}/{{pascalCase}}.module.scss",
-      content: "@import '@style-functions';\n\n.lrer {\n\tdisplay: block;\n\t// your styles\n}\n"
+      content: "@import '@style-functions';\n\n.{{lowerCase}} {\n\tdisplay: block;\n\t// your styles\n}\n"
     },
   ]
 }
