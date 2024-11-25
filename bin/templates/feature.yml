@@ -5,30 +5,35 @@
       type: "folder",
       path: "{{lowerCase}}"
     },
-    {
-      type: "folder",
-      path: "{{lowerCase}}/layout"
-    },
-    {
-      type: "file",
-      path: "{{lowerCase}}/layout/{{pascalCase}}Layout.tsx",
-      content: "import classes from './{{pascalCase}}Layout.module.scss';\n\nexport const {{pascalCase}}Layout = () => {\n  return <div className={classes['{{lowerCase}}']}>{/* write your layout here */}</div>;\n};\n",
-    },
-    {
-      type: "file",
-      path: "{{lowerCase}}/layout/{{pascalCase}}Layout.module.scss",
-      content: "@import '@style-functions';\n\n.{{lowerCase}} {\n\tdisplay: block;\n\t// your styles\n}\n"
-    },
-    {
-      type: "file",
-      path: "{{lowerCase}}/layout/index.ts",
-      content: "export * from './{{pascalCase}}Layout';\n"
-    },
+    # {
+    #   type: "folder",
+    #   path: "{{lowerCase}}/layout"
+    # },
     {
       type: "file",
       path: "{{lowerCase}}/{{pascalCase}}.tsx",
-      content: "import { {{pascalCase}}Layout } from './layout';\n\nexport const {{pascalCase}} = () => {\n  //this is the place to load data from the server\n\n  return <{{pascalCase}}Layout />;\n};\n"
+      content: "import classes from './{{pascalCase}}.module.scss';\n\nexport const {{pascalCase}} = () => {\n  return <div className={classes['{{lowerCase}}']}>{/* write your layout here */}</div>;\n};\n",
     },
+    # {
+    #   type: "file",
+    #   path: "{{lowerCase}}/layout/{{pascalCase}}Layout.tsx",
+    #   content: "import classes from './{{pascalCase}}Layout.module.scss';\n\nexport const {{pascalCase}}Layout = () => {\n  return <div className={classes['{{lowerCase}}']}>{/* write your layout here */}</div>;\n};\n",
+    # },
+    {
+      type: "file",
+      path: "{{lowerCase}}/{{pascalCase}}.module.scss",
+      content: "@import '@style-functions';\n\n.{{lowerCase}} {\n\tdisplay: block;\n\t// your styles\n}\n"
+    },
+    # {
+    #   type: "file",
+    #   path: "{{lowerCase}}/layout/{{pascalCase}}Layout.module.scss",
+    #   content: "@import '@style-functions';\n\n.{{lowerCase}} {\n\tdisplay: block;\n\t// your styles\n}\n"
+    # },
+    # {
+    #   type: "file",
+    #   path: "{{lowerCase}}/layout/index.ts",
+    #   content: "export * from './{{pascalCase}}Layout';\n"
+    # },
     {
       type: "file",
       path: "{{lowerCase}}/index.ts",

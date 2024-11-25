@@ -38,13 +38,26 @@ export class Component {
   }
     
   create() { 
+    console.log('create')
+
+    this.followInstructions();
+
+    this.changeExportFile();
+    
+    this.showSuccess([`Component ${this.name.pascalCase} created`, `Компонент ${this.name.pascalCase} создан`]);
+  }
+
+  followInstructions = () => {
+    console.log('follow instructions');
+
     this.template = yaml.load(fs.readFileSync(path.join(this.__dirname, this.templatePath), 'utf-8'))
     
     this.outputFolder = path.join(process.cwd(), this.template.output);
     
     if (!fs.existsSync(this.outputFolder)) {
-      this.showError([`Folder ${this.outputFolder} does not exist`, `Папка ${this.outputFolder} не существует`]);
-      process.exit(1);
+      fs.mkdirSync(this.outputFolder);
+      // this.showError([`Folder ${this.outputFolder} does not exist`, `Папка ${this.outputFolder} не существует`]);
+      // process.exit(1);
     }
     
     this.template.instructions.forEach((instruction) => {
@@ -62,7 +75,17 @@ export class Component {
         fs.writeFileSync(path.join(this.outputFolder, this.replaceVars(instruction.path)), this.replaceVars(instruction.content));
       }
     })
-    
-    this.showSuccess([`Component ${this.name.pascalCase} created`, `Компонент ${this.name.pascalCase} создан`]);
+  }
+
+  changeExportFile = () => {
+    if (!fs.existsSync(path.join(this.outputFolder, 'index.ts'))) {
+      fs.writeFileSync(path.join(this.outputFolder, 'index.ts'), '');
+    }
+
+    const exportFileContent = fs.readFileSync(path.join(this.outputFolder, 'index.ts'), 'utf-8');
+
+    console.log(exportFileContent);
+
+    fs.writeFileSync(path.join(this.outputFolder, 'index.ts'), `export { ${this.name.pascalCase} } from './${this.name.lowerCase}';\n${exportFileContent}`);
   }
 }

@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
 import { Component } from './component.js';
-import { UiComponent } from './ui-component.js';
 
 const program = new Command();
 
@@ -29,7 +28,7 @@ program
 program
   .command('ui <name>')
   .action((name) => {
-    const component = new UiComponent({name, templatePath: 'templates/ui.yml'});
+    const component = new Component({name, templatePath: 'templates/ui.yml'});
     component.create();
   })
 
