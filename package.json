@@ -1,6 +1,6 @@
 {
   "name": "@digital-butlers/next-js-cli",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Package for creating next.js components",
   "main": "index.js",
   "type": "module",
