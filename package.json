@@ -1,26 +1,26 @@
 {
-  "name": "@digital-butlers/next-js-cli",
-  "version": "0.0.5",
-  "description": "Package for creating next.js components",
-  "main": "index.js",
-  "type": "module",
-  "scripts": {
-    "post": "npm publish --access public"
-  },
-  "bin": {
-    "dbn": "./bin/dbn.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/DigitalButlersOrganization/DB-digitalbutlers-nextjs-cli"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "chalk": "^5.3.0",
-    "commander": "^12.1.0",
-    "js-yaml": "^4.1.0",
-    "lodash": "^4.17.21"
-  }
+	"name": "@digital-butlers/next-js-cli",
+	"version": "0.0.7",
+	"description": "Package for creating next.js components",
+	"main": "index.js",
+	"type": "module",
+	"scripts": {
+		"post": "npm publish --access public"
+	},
+	"bin": {
+		"dbn": "./bin/dbn.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/DigitalButlersOrganization/DB-digitalbutlers-nextjs-cli"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"chalk": "^5.3.0",
+		"commander": "^12.1.0",
+		"js-yaml": "^4.1.0",
+		"lodash": "^4.17.21"
+	}
 }

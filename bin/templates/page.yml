@@ -1,0 +1,19 @@
+{
+  output: "src/app",
+  instructions: [
+    {
+      type: "folder",
+      path: "{{lowerCase}}"
+    },
+    {
+      type: "file",
+      path: "{{lowerCase}}/page.tsx",
+      content: "import { {{pascalCase}} } from './{{pascalCase}}';\n\nconst page = () => {\n  return (\n    <{{pascalCase}} /> )  \n};   export default page;\n",
+    },
+    {
+      type: "file",
+      path: "{{lowerCase}}/{{pascalCase}}Page.tsx",
+      content: "import Main from '@ui/kit';\n\nexport const OnePage = () => {\n  return (\n    <Main>{/* write you code here */}</Main> )  \n};   export default OnePage;\n",
+    },
+  ]
+}

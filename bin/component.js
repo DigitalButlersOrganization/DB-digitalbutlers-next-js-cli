@@ -1,91 +1,110 @@
-import { pascalCase } from './utils/pascalCase.js';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import yaml from 'js-yaml';
-import chalk from 'chalk';
+import { pascalCase } from "./utils/pascalCase.js";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import yaml from "js-yaml";
+import chalk from "chalk";
 
 export class Component {
-  constructor({ name, templatePath }) {
-    this.templatePath = templatePath;
-    this.template = undefined; 
+	constructor({ name, templatePath }) {
+		this.templatePath = templatePath;
+		this.template = undefined;
 
-    this.filename = fileURLToPath(import.meta.url);
-    this.__dirname = path.dirname(this.filename);
+		this.filename = fileURLToPath(import.meta.url);
+		this.__dirname = path.dirname(this.filename);
 
-    this.outputFolder = undefined;
-    
-    this.name = {
-      lowerCase: name.toLowerCase(),
-      pascalCase: pascalCase(name)
-    }
-  }
+		this.outputFolder = undefined;
 
-  replaceVars = (data) => {
-    return data.replace(/{{lowerCase}}/g, this.name.lowerCase).replace(/{{pascalCase}}/g, this.name.pascalCase)
-  }
+		this.name = {
+			lowerCase: name.toLowerCase(),
+			pascalCase: pascalCase(name),
+		};
+	}
 
-  showError = (messages) => {
-    messages.forEach(message => {
-      console.error(chalk.bgRed.white(message))
-    })
-  }
+	replaceVars = (data) => {
+		return data
+			.replace(/{{lowerCase}}/g, this.name.lowerCase)
+			.replace(/{{pascalCase}}/g, this.name.pascalCase);
+	};
 
-  showSuccess = (messages) => {
-    messages.forEach(message => {
-      console.error(chalk.bgGreen.white(message))
-    })
-  }
-    
-  create() { 
-    console.log('create')
+	showError = (messages) => {
+		messages.forEach((message) => {
+			console.error(chalk.bgRed.white(message));
+		});
+	};
 
-    this.followInstructions();
+	showSuccess = (messages) => {
+		messages.forEach((message) => {
+			console.error(chalk.bgGreen.white(message));
+		});
+	};
 
-    this.changeExportFile();
-    
-    this.showSuccess([`Component ${this.name.pascalCase} created`, `Компонент ${this.name.pascalCase} создан`]);
-  }
+	create() {
+		this.followInstructions();
 
-  followInstructions = () => {
-    console.log('follow instructions');
+		this.changeExportFile();
 
-    this.template = yaml.load(fs.readFileSync(path.join(this.__dirname, this.templatePath), 'utf-8'))
-    
-    this.outputFolder = path.join(process.cwd(), this.template.output);
-    
-    if (!fs.existsSync(this.outputFolder)) {
-      fs.mkdirSync(this.outputFolder);
-      // this.showError([`Folder ${this.outputFolder} does not exist`, `Папка ${this.outputFolder} не существует`]);
-      // process.exit(1);
-    }
-    
-    this.template.instructions.forEach((instruction) => {
+		this.showSuccess([
+			`Component ${this.name.pascalCase} created`,
+			`Компонент ${this.name.pascalCase} создан`,
+		]);
+	}
 
-      if (fs.existsSync(path.join(this.outputFolder,this.replaceVars(instruction.path)))) {
-        this.showError([`File/Folder ${this.replaceVars(instruction.path)} already exists`, `Файл/Папка ${this.replaceVars(instruction.path)} уже существует`]);
-        process.exit(1);  
-      }
-        
-      if (instruction.type === 'folder') {
-        fs.mkdirSync(path.join(this.outputFolder, this.replaceVars(instruction.path)), { recursive: true });
-      }
+	followInstructions = () => {
+		this.template = yaml.load(
+			fs.readFileSync(path.join(this.__dirname, this.templatePath), "utf-8"),
+		);
 
-      if (instruction.type === 'file') {
-        fs.writeFileSync(path.join(this.outputFolder, this.replaceVars(instruction.path)), this.replaceVars(instruction.content));
-      }
-    })
-  }
+		this.outputFolder = path.join(process.cwd(), this.template.output);
 
-  changeExportFile = () => {
-    if (!fs.existsSync(path.join(this.outputFolder, 'index.ts'))) {
-      fs.writeFileSync(path.join(this.outputFolder, 'index.ts'), '');
-    }
+		if (!fs.existsSync(this.outputFolder)) {
+			fs.mkdirSync(this.outputFolder);
+			// this.showError([`Folder ${this.outputFolder} does not exist`, `Папка ${this.outputFolder} не существует`]);
+			// process.exit(1);
+		}
 
-    const exportFileContent = fs.readFileSync(path.join(this.outputFolder, 'index.ts'), 'utf-8');
+		this.template.instructions.forEach((instruction) => {
+			if (
+				fs.existsSync(
+					path.join(this.outputFolder, this.replaceVars(instruction.path)),
+				)
+			) {
+				this.showError([
+					`File/Folder ${this.replaceVars(instruction.path)} already exists`,
+					`Файл/Папка ${this.replaceVars(instruction.path)} уже существует`,
+				]);
+				process.exit(1);
+			}
 
-    console.log(exportFileContent);
+			if (instruction.type === "folder") {
+				fs.mkdirSync(
+					path.join(this.outputFolder, this.replaceVars(instruction.path)),
+					{ recursive: true },
+				);
+			}
 
-    fs.writeFileSync(path.join(this.outputFolder, 'index.ts'), `export { ${this.name.pascalCase} } from './${this.name.lowerCase}';\n${exportFileContent}`);
-  }
+			if (instruction.type === "file") {
+				fs.writeFileSync(
+					path.join(this.outputFolder, this.replaceVars(instruction.path)),
+					this.replaceVars(instruction.content),
+				);
+			}
+		});
+	};
+
+	changeExportFile = () => {
+		if (!fs.existsSync(path.join(this.outputFolder, "index.ts"))) {
+			fs.writeFileSync(path.join(this.outputFolder, "index.ts"), "");
+		}
+
+		const exportFileContent = fs.readFileSync(
+			path.join(this.outputFolder, "index.ts"),
+			"utf-8",
+		);
+
+		fs.writeFileSync(
+			path.join(this.outputFolder, "index.ts"),
+			`export { ${this.name.pascalCase} } from './${this.name.lowerCase}';\n${exportFileContent}`,
+		);
+	};
 }
