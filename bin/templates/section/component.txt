@@ -1,0 +1,18 @@
+import { Section, Container } from '@ui/kit';
+
+import classes from './{{pascalCase}}.module.scss';
+
+interface {{pascalCase}}Props {
+	// your interface here
+}
+
+export const {{pascalCase}} = ({}: {{pascalCase}}Props) => {
+	return (
+		<Section className={classes['{{lowerCase}}']}>
+			<Container>
+				{/* your component here */}
+			</Container>
+		</Section>
+	);
+};
+

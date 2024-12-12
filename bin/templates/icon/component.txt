@@ -1,0 +1,6 @@
+export const {{pascalCase}}Icon = () => {
+	return (
+		{/* your component here */}
+	);
+};
+

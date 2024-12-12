@@ -38,4 +38,9 @@ program.command("ui <name>").action((name) => {
 	component.create();
 });
 
+program.command("icon <name>").action((name) => {
+	const component = new Component({ name, templatePath: "templates/icon.yml" });
+	component.create();
+});
+
 program.parse(process.argv);

@@ -1,5 +1,5 @@
 {
-  output: "src/app",
+  output: "src/1_pages",
   instructions: [
     {
       type: "folder",
@@ -7,13 +7,21 @@
     },
     {
       type: "file",
-      path: "{{lowerCase}}/page.tsx",
-      content: "import { {{pascalCase}} } from './{{pascalCase}}';\n\nconst page = () => {\n  return (\n    <{{pascalCase}} /> )  \n};   export default page;\n",
+      path: "{{lowerCase}}/{{pascalCase}}.tsx",
+      content: "./templates/page/component.txt",
     },
     {
       type: "file",
-      path: "{{lowerCase}}/{{pascalCase}}Page.tsx",
-      content: "import Main from '@ui/kit';\n\nexport const OnePage = () => {\n  return (\n    <Main>{/* write you code here */}</Main> )  \n};   export default OnePage;\n",
+      path: "{{lowerCase}}/{{pascalCase}}.module.scss",
+      content: "./templates/page/style.txt"
     },
-  ]
+    {
+      type: "file",
+      path: "{{lowerCase}}/index.ts",
+      content: "./templates/page/index.txt"
+    }
+  ],
+  export: {
+    content: "./templates/page/export.txt",
+  }
 }

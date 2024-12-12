@@ -18,6 +18,7 @@ export class Component {
 		this.name = {
 			lowerCase: name.toLowerCase(),
 			pascalCase: pascalCase(name),
+			kebabCase: name,
 		};
 	}
 
@@ -84,9 +85,15 @@ export class Component {
 			}
 
 			if (instruction.type === "file") {
+				const contentPath = instruction.content;
+				const content = fs.readFileSync(
+					path.join(this.__dirname, contentPath),
+					"utf-8",
+				);
+
 				fs.writeFileSync(
 					path.join(this.outputFolder, this.replaceVars(instruction.path)),
-					this.replaceVars(instruction.content),
+					this.replaceVars(content),
 				);
 			}
 		});
@@ -97,6 +104,11 @@ export class Component {
 			fs.writeFileSync(path.join(this.outputFolder, "index.ts"), "");
 		}
 
+		const newExportText = fs.readFileSync(
+			path.join(this.__dirname, this.template.export.content),
+			"utf-8",
+		);
+
 		const exportFileContent = fs.readFileSync(
 			path.join(this.outputFolder, "index.ts"),
 			"utf-8",
@@ -104,7 +116,8 @@ export class Component {
 
 		fs.writeFileSync(
 			path.join(this.outputFolder, "index.ts"),
-			`export { ${this.name.pascalCase} } from './${this.name.lowerCase}';\n${exportFileContent}`,
+
+			`${this.replaceVars(newExportText)}\n${exportFileContent}`,
 		);
 	};
 }

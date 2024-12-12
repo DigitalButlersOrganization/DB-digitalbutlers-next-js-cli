@@ -8,18 +8,20 @@
     {
       type: "file",
       path: "{{lowerCase}}/{{pascalCase}}.tsx",
-      content: "import classes from './{{pascalCase}}.module.scss';\n\nexport const {{pascalCase}} = () => {\n  return <div className={classes['{{lowerCase}}']}>{/* write your layout here */}</div>;\n};\n",
+      content: "./templates/widget/component.txt",
     },
     {
       type: "file",
       path: "{{lowerCase}}/{{pascalCase}}.module.scss",
-      content: "@import '@style-functions';\n\n.{{lowerCase}} {\n\tdisplay: block;\n\t// your styles\n}\n"
+      content: "./templates/widget/style.txt"
     },
     {
       type: "file",
       path: "{{lowerCase}}/index.ts",
-      content: "export * from './{{pascalCase}}';\n"
+      content: "./templates/widget/index.txt"
     }
-
-  ]
+  ],
+  export: {
+    content: "./templates/widget/export.txt",
+  }
 }

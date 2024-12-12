@@ -1,0 +1,13 @@
+{
+  output: "src/6_shared/icons",
+  instructions: [
+    {
+      type: "file",
+      path: "{{pascalCase}}Icon.tsx",
+      content: "./templates/icon/component.txt",
+    }
+  ],
+  export: {
+    content: "./templates/icon/export.txt",
+  },
+}
